@@ -697,6 +697,73 @@
         .modal-content .decision-table td:first-child { color: var(--text); font-weight: 500; }
         .modal-date { color: var(--muted); font-size: 12px; margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--border); }
         @media(max-width: 600px) { .modal-box { padding: 28px 18px; } }
+
+        /* NEW badge */
+        .new-pill { background: var(--green); color: #0d0f14; padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; }
+
+        /* Quick Picker */
+        .picker-section { margin-top: 0; margin-bottom: 40px; }
+        .picker-box { background: var(--surface); border: 1px solid rgba(79,124,255,0.3); border-radius: 16px; padding: 28px 32px; }
+        .picker-title { font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
+        .picker-sub { color: var(--muted); font-size: 13px; margin-bottom: 22px; }
+        .picker-steps { display: none; }
+        .picker-steps.active { display: block; }
+        .picker-q { font-size: 14.5px; font-weight: 600; color: var(--text); margin-bottom: 14px; }
+        .picker-options { display: flex; flex-wrap: wrap; gap: 10px; }
+        .picker-opt {
+            padding: 10px 18px; background: var(--surface2); border: 1px solid var(--border);
+            border-radius: 9px; cursor: pointer; font-size: 13px; color: var(--muted);
+            transition: all 0.18s; font-family: 'DM Sans', sans-serif;
+        }
+        .picker-opt:hover { border-color: var(--blue); color: var(--text); }
+        .picker-result { display: none; }
+        .picker-result.active { display: block; }
+        .picker-result-box {
+            background: var(--surface2); border: 1px solid rgba(245,197,66,0.3);
+            border-radius: 12px; padding: 20px 24px;
+        }
+        .picker-result-label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+        .picker-result-name { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 800; margin-bottom: 6px; }
+        .picker-result-why { color: var(--muted); font-size: 13.5px; line-height: 1.6; margin-bottom: 14px; }
+        .picker-result-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+        .picker-restart { background: none; border: 1px solid var(--border); color: var(--muted); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; font-family: 'DM Sans',sans-serif; transition: all 0.2s; }
+        .picker-restart:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+        .picker-start { padding: 11px 24px; background: var(--blue); color: #fff; border: none; border-radius: 9px; cursor: pointer; font-size: 13px; font-weight: 600; font-family: 'DM Sans',sans-serif; transition: all 0.2s; }
+        .picker-start:hover { background: #3d6ae8; }
+
+        /* Comparison table */
+        .compare-section { margin-top: 48px; }
+        .compare-scroll { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
+        .compare-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 700px; }
+        .compare-table th { background: var(--surface2); color: var(--muted); padding: 12px 16px; text-align: left; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; font-weight: 600; white-space: nowrap; }
+        .compare-table th:first-child { color: var(--text); }
+        .compare-table td { padding: 13px 16px; border-bottom: 1px solid var(--border); color: var(--muted); vertical-align: middle; }
+        .compare-table tr:last-child td { border-bottom: none; }
+        .compare-table tr:hover td { background: rgba(255,255,255,0.02); }
+        .compare-table td:first-child { color: var(--text); font-weight: 500; white-space: nowrap; }
+        .compare-table td.free-price { color: var(--green); font-weight: 600; }
+        .compare-table td.yes { color: var(--green); }
+        .compare-table td.no { color: #555; }
+        .compare-table td.partial { color: var(--gold); }
+        .compare-owner td { background: rgba(245,197,66,0.04); }
+        .compare-owner td:first-child::after { content: ' ★'; color: var(--gold); font-size: 11px; }
+
+        /* Back to top */
+        .back-to-top {
+            position: fixed; bottom: 28px; right: 28px;
+            background: var(--surface2); border: 1px solid rgba(255,255,255,0.12);
+            color: var(--muted); width: 44px; height: 44px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 18px; transition: all 0.2s;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4); z-index: 100;
+            opacity: 0; pointer-events: none;
+        }
+        .back-to-top.visible { opacity: 1; pointer-events: all; }
+        .back-to-top:hover { color: var(--text); border-color: rgba(255,255,255,0.25); transform: translateY(-2px); }
+
+        /* Result count badge on filter */
+        .filter-count { font-size: 10px; background: rgba(255,255,255,0.1); padding: 1px 6px; border-radius: 10px; margin-left: 4px; }
+
     </style>
 </head>
 <body>
@@ -725,10 +792,55 @@
     <!-- STATS -->
     <div class="stats-row">
         <div class="stat-box"><div class="stat-num">27</div><div class="stat-lbl">Tools Reviewed</div></div>
-        <div class="stat-box"><div class="stat-num">8</div><div class="stat-lbl">Free Tools</div></div>
-        <div class="stat-box"><div class="stat-num">5</div><div class="stat-lbl">Privacy-First</div></div>
+        <div class="stat-box"><div class="stat-num">11</div><div class="stat-lbl">Free Tools</div></div>
+        <div class="stat-box"><div class="stat-num">6</div><div class="stat-lbl">Privacy-First</div></div>
         <div class="stat-box"><div class="stat-num">Mar 26</div><div class="stat-lbl">Last Updated</div></div>
     </div>
+
+
+    <!-- QUICK PICKER -->
+    <section class="picker-section" aria-label="Find your perfect PDF tool">
+        <div class="picker-box">
+            <div class="picker-title">⚡ Find Your Perfect PDF Tool in 2 Clicks</div>
+            <p class="picker-sub">Answer two quick questions and we'll point you to the right tool.</p>
+
+            <div id="pickerStart">
+                <button class="picker-start" onclick="startPicker()">Find My Tool →</button>
+            </div>
+
+            <div class="picker-steps" id="pickerStep1">
+                <div class="picker-q">1 / 2 — What do you mainly need to do?</div>
+                <div class="picker-options">
+                    <button class="picker-opt" onclick="pickerQ1('compress')">🗜️ Compress / reduce file size</button>
+                    <button class="picker-opt" onclick="pickerQ1('merge')">📎 Merge multiple PDFs</button>
+                    <button class="picker-opt" onclick="pickerQ1('edit')">✏️ Edit text & images</button>
+                    <button class="picker-opt" onclick="pickerQ1('sign')">✍️ Fill forms & sign</button>
+                    <button class="picker-opt" onclick="pickerQ1('convert')">🔄 Convert to/from Word/Excel</button>
+                    <button class="picker-opt" onclick="pickerQ1('design')">🎨 Edit design / visual layout</button>
+                </div>
+            </div>
+
+            <div class="picker-steps" id="pickerStep2">
+                <div class="picker-q" id="pickerQ2Text">2 / 2 — Is privacy important for this file?</div>
+                <div class="picker-options">
+                    <button class="picker-opt" onclick="pickerQ2(true)">🔒 Yes — sensitive document</button>
+                    <button class="picker-opt" onclick="pickerQ2(false)">🌐 Not really — just a normal file</button>
+                </div>
+            </div>
+
+            <div class="picker-result" id="pickerResult">
+                <div class="picker-result-box">
+                    <div class="picker-result-label">Our recommendation</div>
+                    <div class="picker-result-name" id="prName"></div>
+                    <div class="picker-result-why" id="prWhy"></div>
+                    <div class="picker-result-actions">
+                        <a id="prLink" href="#" target="_blank" rel="noopener noreferrer" class="picker-start">Visit Tool →</a>
+                        <button class="picker-restart" onclick="restartPicker()">Start Over</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- CONTROLS -->
     <section class="controls" aria-label="Search and filter PDF tools">
@@ -787,6 +899,11 @@
                 <li><strong>Soda PDF</strong> — 300+ formats, $10/month</li>
                 <li><strong>Lumin</strong> — Google Workspace integration, $10/month</li>
                 <li><strong>BoldSign PDF Merger</strong> — Free, client-side, privacy-first</li>
+                <li><strong>DocHub</strong> — Sign &amp; fill PDFs, Google Drive integration, free tier, $14/month</li>
+                <li><strong>pdfFiller</strong> — 25M+ form library, HIPAA compliant, from $8/month</li>
+                <li><strong>Stirling-PDF</strong> — Self-hosted open-source, 60+ tools, completely free</li>
+                <li><strong>Canva PDF Editor</strong> — Design-canvas PDF editing, free tier, $15/month</li>
+                <li><strong>SwifDoo PDF</strong> — Lightweight Windows editor, from $29.99/year</li>
             </ol>
         </div>
     </noscript>
@@ -837,6 +954,54 @@
     </section>
 
 </div>
+
+
+    <!-- COMPARISON TABLE -->
+    <section class="compare-section" aria-label="PDF tools comparison table">
+        <h2 class="section-title" style="margin-top:48px;">At-a-Glance Comparison</h2>
+        <div class="compare-scroll">
+            <table class="compare-table">
+                <thead>
+                    <tr>
+                        <th>Tool</th>
+                        <th>Price</th>
+                        <th>Free Tier</th>
+                        <th>Privacy-First</th>
+                        <th>Edit Text</th>
+                        <th>OCR</th>
+                        <th>E-Sign</th>
+                        <th>Mobile</th>
+                        <th>Platform</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="compare-owner"><td>FreeCompressPDF.com</td><td class="free-price">Free</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="yes">✓</td><td>Browser</td></tr>
+                    <tr class="compare-owner"><td>FreeMergePDF.com</td><td class="free-price">Free</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="yes">✓</td><td>Browser</td></tr>
+                    <tr><td>Adobe Acrobat Pro</td><td>$29.99/mo</td><td class="no">–</td><td class="no">–</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td>Win/Mac/Web</td></tr>
+                    <tr><td>PDFelement</td><td>$31.99/yr</td><td class="no">–</td><td class="no">–</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td>Win/Mac</td></tr>
+                    <tr><td>PDF Expert</td><td>$79.99/yr</td><td class="no">–</td><td class="no">–</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td>Mac/iOS only</td></tr>
+                    <tr><td>Foxit PDF Editor</td><td>$129.99/yr</td><td class="no">–</td><td class="no">–</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td>Win/Mac/Web</td></tr>
+                    <tr><td>UPDF</td><td>$39.99/yr</td><td class="partial">Trial</td><td class="no">–</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td>Win/Mac/iOS/Android</td></tr>
+                    <tr><td>PDFgear</td><td class="free-price">Free</td><td class="yes">✓</td><td class="no">–</td><td class="yes">✓</td><td class="yes">✓</td><td class="partial">Basic</td><td class="yes">✓</td><td>Win/Mac/iOS/Android</td></tr>
+                    <tr><td>Nitro PDF Pro</td><td>$159 one-time</td><td class="no">–</td><td class="no">–</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td>Win/Web</td></tr>
+                    <tr><td>Smallpdf</td><td>$15/mo</td><td class="partial">2/day</td><td class="no">–</td><td class="partial">Basic</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td>Browser/Desktop</td></tr>
+                    <tr><td>iLovePDF</td><td>$9/mo</td><td class="partial">Limited</td><td class="no">–</td><td class="partial">Basic</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td>Browser/App</td></tr>
+                    <tr><td>Sejda</td><td>$7.50/mo</td><td class="partial">3/day</td><td class="partial">2hr delete</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">–</td><td>Browser/Desktop</td></tr>
+                    <tr><td>PDF24</td><td class="free-price">Free</td><td class="yes">✓</td><td class="yes">GDPR</td><td class="partial">Basic</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td>Browser/Desktop</td></tr>
+                    <tr><td>PDFsam Basic</td><td class="free-price">Free</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td>Win/Mac/Linux</td></tr>
+                    <tr><td>DocHub</td><td>$14/mo</td><td class="yes">✓</td><td class="no">–</td><td class="partial">Basic</td><td class="no">–</td><td class="yes">✓</td><td class="yes">✓</td><td>Browser</td></tr>
+                    <tr><td>pdfFiller</td><td>$8/mo</td><td class="no">–</td><td class="no">–</td><td class="partial">Basic</td><td class="no">–</td><td class="yes">✓</td><td class="yes">✓</td><td>Browser/App</td></tr>
+                    <tr><td>Stirling-PDF</td><td class="free-price">Free (self-host)</td><td class="yes">✓</td><td class="yes">✓</td><td class="partial">Basic</td><td class="yes">✓</td><td class="no">–</td><td class="no">–</td><td>Self-hosted</td></tr>
+                    <tr><td>Canva PDF Editor</td><td>$15/mo</td><td class="yes">✓</td><td class="no">–</td><td class="partial">Design only</td><td class="no">–</td><td class="no">–</td><td class="yes">✓</td><td>Browser/App</td></tr>
+                    <tr><td>SwifDoo PDF</td><td>$29.99/yr</td><td class="no">–</td><td class="no">–</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">–</td><td>Windows only</td></tr>
+                    <tr><td>PDF-XChange Editor</td><td>$54.50</td><td class="partial">Free tier</td><td class="no">–</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">–</td><td>Windows only</td></tr>
+                    <tr><td>Apple Preview</td><td class="free-price">Free</td><td class="yes">✓</td><td class="yes">Local</td><td class="partial">Basic</td><td class="no">–</td><td class="yes">Basic</td><td class="yes">iOS</td><td>Mac/iOS only</td></tr>
+                    <tr><td>Xodo PDF</td><td class="free-price">Free</td><td class="yes">✓</td><td class="no">–</td><td class="partial">Basic</td><td class="no">–</td><td class="yes">✓</td><td class="yes">✓</td><td>Win/Mac/iOS/Android</td></tr>
+                    <tr><td>BoldSign</td><td class="free-price">Free</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">–</td><td class="no">–</td><td class="no">–</td><td class="yes">✓</td><td>Browser</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 
     <!-- BLOG SECTION -->
     <section class="blog-section" aria-label="PDF tools blog and guides">
@@ -1323,7 +1488,7 @@ const tools = [
     },
     {
         rank: 23,
-        name: "DocHub",
+        name: "DocHub", isNew: true,
         url: "https://dochub.com/",
         icon: "🖊️",
         category: "editor",
@@ -1340,7 +1505,7 @@ const tools = [
     },
     {
         rank: 24,
-        name: "pdfFiller",
+        name: "pdfFiller", isNew: true,
         url: "https://www.pdffiller.com/",
         icon: "🗂️",
         category: "editor",
@@ -1357,7 +1522,7 @@ const tools = [
     },
     {
         rank: 25,
-        name: "Stirling-PDF",
+        name: "Stirling-PDF", isNew: true,
         url: "https://stirlingpdf.com/",
         icon: "⚙️",
         category: "editor",
@@ -1374,7 +1539,7 @@ const tools = [
     },
     {
         rank: 26,
-        name: "Canva PDF Editor",
+        name: "Canva PDF Editor", isNew: true,
         url: "https://www.canva.com/pdf-editor/",
         icon: "🎨",
         category: "editor",
@@ -1391,7 +1556,7 @@ const tools = [
     },
     {
         rank: 27,
-        name: "SwifDoo PDF",
+        name: "SwifDoo PDF", isNew: true,
         url: "https://www.swifdoo.com/",
         icon: "🚀",
         category: "editor",
@@ -1451,6 +1616,7 @@ function renderTools() {
                 <div class="badges-col">
                     <div class="rank-badge">#${t.rank}</div>
                     ${t.isOwner ? '<div class="owner-pill">Owner\'s Tool</div>' : ''}
+                    ${t.isNew ? '<div class="new-pill">NEW</div>' : ''}
                 </div>
             </div>
 
@@ -1506,6 +1672,87 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 });
 
 renderTools();
+
+
+// ─── QUICK PICKER ─────────────────────────────────────────────────────
+let pickerTask = null;
+
+const pickerData = {
+  compress: {
+    privacy: { name:'FreeCompressPDF.com', url:'https://www.freecompresspdf.com/', why:'100% browser-based compression — 24+ methods, your file never leaves your device. Best privacy AND best compression.' },
+    noprivacy: { name:'FreeCompressPDF.com', url:'https://www.freecompresspdf.com/', why:'Fastest, free, and no sign-up. Works instantly in your browser with no file size limit.' }
+  },
+  merge: {
+    privacy: { name:'FreeMergePDF.com', url:'https://freemergepdf.com/', why:'Client-side PDF merger — your files stay in your browser. Zero uploads, zero accounts, zero cost.' },
+    noprivacy: { name:'FreeMergePDF.com', url:'https://freemergepdf.com/', why:'The cleanest, fastest free PDF merger online. No watermarks, no file size limits, works offline.' }
+  },
+  edit: {
+    privacy: { name:'PDFgear', url:'https://www.pdfgear.com/', why:'Fully free desktop editor with no watermarks. Processes locally on your machine — nothing goes to any server.' },
+    noprivacy: { name:'PDFelement', url:'https://pdf.wondershare.com/', why:'AI-powered editor at $31.99/year. The best value Adobe alternative with real text editing, OCR, and a modern interface.' }
+  },
+  sign: {
+    privacy: { name:'DocHub', url:'https://dochub.com/', why:'Legally binding e-signatures with a solid free tier. HIPAA compliant and trusted by 83M+ users for sensitive document workflows.' },
+    noprivacy: { name:'DocHub', url:'https://dochub.com/', why:'Best free tier for form-filling and signing. Deep Google Drive integration makes it effortless for most workflows.' }
+  },
+  convert: {
+    privacy: { name:'PDF24', url:'https://www.pdf24.org/', why:'German-made, GDPR-compliant, completely free. Strong desktop app works offline. 30+ tools including PDF↔Word/Excel conversion.' },
+    noprivacy: { name:'iLovePDF', url:'https://www.ilovepdf.com/', why:'25+ free tools including fast, accurate PDF-to-Word and Word-to-PDF conversion. No install needed.' }
+  },
+  design: {
+    privacy: { name:'Canva PDF Editor', url:'https://www.canva.com/pdf-editor/', why:'Design-canvas editing with a generous free tier. Your files live in Canva\'s cloud — not ideal for highly sensitive docs, but very private compared to most.' },
+    noprivacy: { name:'Canva PDF Editor', url:'https://www.canva.com/pdf-editor/', why:'Unbeatable for visual documents, marketing materials, and presentations. Treats your PDF like a design canvas — swap images, fonts, and layouts freely.' }
+  }
+};
+
+function startPicker() {
+  document.getElementById('pickerStart').style.display = 'none';
+  document.getElementById('pickerStep1').classList.add('active');
+}
+
+function pickerQ1(task) {
+  pickerTask = task;
+  document.getElementById('pickerStep1').classList.remove('active');
+  document.getElementById('pickerStep2').classList.add('active');
+}
+
+function pickerQ2(isPrivate) {
+  document.getElementById('pickerStep2').classList.remove('active');
+  const rec = pickerData[pickerTask]?.[isPrivate ? 'privacy' : 'noprivacy'];
+  if (!rec) return;
+  document.getElementById('prName').textContent = rec.name;
+  document.getElementById('prWhy').textContent = rec.why;
+  document.getElementById('prLink').href = rec.url;
+  document.getElementById('pickerResult').classList.add('active');
+}
+
+function restartPicker() {
+  pickerTask = null;
+  document.getElementById('pickerResult').classList.remove('active');
+  document.getElementById('pickerStep2').classList.remove('active');
+  document.getElementById('pickerStep1').classList.remove('active');
+  document.getElementById('pickerStart').style.display = 'block';
+}
+
+// ─── BACK TO TOP ───────────────────────────────────────────────────────
+const btt = document.getElementById('backToTop');
+window.addEventListener('scroll', () => {
+  btt.classList.toggle('visible', window.scrollY > 400);
+}, { passive: true });
+
+// ─── FILTER RESULT COUNTS ──────────────────────────────────────────────
+function updateFilterCounts() {
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    const f = btn.dataset.filter;
+    const count = f === 'all' ? tools.length : tools.filter(t => t.types.includes(f)).length;
+    const existing = btn.querySelector('.filter-count');
+    if (existing) existing.remove();
+    const badge = document.createElement('span');
+    badge.className = 'filter-count';
+    badge.textContent = count;
+    btn.appendChild(badge);
+  });
+}
+updateFilterCounts();
 
 // ─── BLOG CONTENT ─────────────────────────────────────
 const blogs = {
@@ -1694,5 +1941,6 @@ document.querySelectorAll('.blog-card').forEach(card => {
 });
 
 </script>
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top" title="Back to top">↑</button>
 </body>
 </html>
